@@ -427,3 +427,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **⚠️ Medical Disclaimer**: This application is for informational purposes only and should not replace professional medical advice. Always consult with healthcare providers for medical decisions.
+
+## Vercel deployment
+
+If you plan to host the frontend on Vercel, we added `DEPLOY_VERCEL.md` with step-by-step instructions and notes about hosting the backend. See `DEPLOY_VERCEL.md` in the repo root.

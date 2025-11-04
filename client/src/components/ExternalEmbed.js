@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Conditionally load the external embed on non-Chatbot routes
-// and hide it on the Chatbot page to avoid the corner avatar there.
-const EMBED_SRC = 'https://www.noupe.com/embed/019a3970f83970d4b9df03430fe420d4faaf.js';
-const SCRIPT_ID = 'noupe-embed-script';
+// External embed temporarily disabled to prevent script errors
+// You can re-enable this by uncommenting the code below
+// const EMBED_SRC = 'https://www.noupe.com/embed/019a3970f83970d4b9df03430fe420d4faaf.js';
+// const SCRIPT_ID = 'noupe-embed-script';
 
 export default function ExternalEmbed() {
   const location = useLocation();
 
   useEffect(() => {
+    // External embed disabled - no action needed
+    // This prevents third-party script errors
+    
+    /* ORIGINAL CODE - Uncomment to re-enable external embed:
+    
     const isChatbot = location.pathname.startsWith('/chatbot');
 
     const hideNoupeIframes = () => {
@@ -46,10 +51,11 @@ export default function ExternalEmbed() {
       }
       unhideNoupeIframes();
     }
+    
+    */
 
-    // No explicit cleanup to avoid removing script during navigation;
-    // we only toggle visibility on Chatbot page.
-  }, [location.pathname]);
+    // External embed disabled - component returns null
+  }, [location]);
 
   return null;
 }

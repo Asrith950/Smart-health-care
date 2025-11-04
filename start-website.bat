@@ -9,8 +9,8 @@ echo.
 echo Starting website servers...
 echo.
 
-REM Change to project directory
-cd /d "C:\Users\pinet\OneDrive\Documents\DEMO 2 SHC\secure-medical-storage"
+REM Change to the project directory where this script is located (works even if moved)
+pushd "%~dp0"
 
 REM Start both frontend and backend
 echo Starting frontend (React) and backend (Node.js)...
@@ -34,3 +34,5 @@ if errorlevel 1 (
     echo ==========================================
     pause
 )
+
+popd

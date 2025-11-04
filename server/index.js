@@ -105,16 +105,30 @@ app.listen(PORT, () => {
 });
 
 // Try to connect to MongoDB (optional for demo)
+// Detect if using local MongoDB or Atlas
+const isLocalMongoDB = MONGODB_URI.includes('localhost') || MONGODB_URI.includes('127.0.0.1');
+
+// Connection options - different for local vs Atlas
+const mongooseOptions = isLocalMongoDB
+  ? {
+      // Local MongoDB - no SSL
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    }
+  : {
+      // MongoDB Atlas - needs SSL
+      ssl: true,
+      tls: true,
+      tlsAllowInvalidCertificates: false,
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    };
+
 mongoose
-  .connect(MONGODB_URI, {
-    ssl: true,
-    tls: true,
-    tlsAllowInvalidCertificates: false,
-    serverSelectionTimeoutMS: 10000,
-    socketTimeoutMS: 45000,
-  })
+  .connect(MONGODB_URI, mongooseOptions)
   .then(() => {
     console.log('✅ Connected to MongoDB - Database features enabled');
+    console.log(`   Database: ${isLocalMongoDB ? 'Local MongoDB' : 'MongoDB Atlas'}`);
   })
   .catch((err) => {
     console.log('⚠️  MongoDB connection failed - Website will run in demo mode');

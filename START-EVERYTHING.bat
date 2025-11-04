@@ -16,8 +16,22 @@ echo.
 REM Create data directory if it doesn't exist
 if not exist "C:\data\db" mkdir "C:\data\db"
 
-REM Change to project directory
-cd /d "C:\Users\pinet\OneDrive\Documents\DEMO 2 SHC\secure-medical-storage"
+REM Change to the project directory where this script is located (works even if moved)
+pushd "%~dp0"
+
+REM Ensure Node dependencies exist (quick, only installs if missing)
+if not exist "node_modules" (
+	echo Detected missing root dependencies. Installing once...
+	call npm install
+)
+if not exist "server\node_modules" (
+	echo Detected missing server dependencies. Installing once...
+	call npm run install-server
+)
+if not exist "client\node_modules" (
+	echo Detected missing client dependencies. Installing once...
+	call npm run install-client
+)
 
 echo [1/3] Starting MongoDB Database...
 
@@ -70,4 +84,5 @@ echo go to: http://localhost:3000
 echo.
 echo Keep all terminal windows open while using the website.
 echo.
+popd
 pause

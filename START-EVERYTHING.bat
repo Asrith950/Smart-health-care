@@ -65,13 +65,13 @@ echo ==========================================
 echo.
 
 REM Start backend server in its own window
-start "Backend Server (Port 5000)" cmd /k "echo Backend API Server & echo =================== & echo Running on: http://localhost:5000 & echo Keep this window open! & echo. & cd /d \"%~dp0server\" & npm run dev"
+start "Backend Server (Port 5000)" cmd /k "echo Backend API Server & echo =================== & echo Running on: http://localhost:5000 & echo Keep this window open! & echo. & cd /d \"%~dp0server\" && npm run dev || (echo Error starting backend! & pause)"
 
 REM Wait a moment for backend to initialize
-timeout /t 3 /nobreak >nul
+timeout /t 5 /nobreak >nul
 
 REM Start frontend in its own window (with BROWSER=none to prevent auto-open)
-start "Frontend React App (Port 3000)" cmd /k "echo Frontend React App & echo =================== & echo Running on: http://localhost:3000 & echo Keep this window open! & echo. & cd /d \"%~dp0client\" & set BROWSER=none && npm start"
+start "Frontend React App (Port 3000)" cmd /k "echo Frontend React App & echo =================== & echo Running on: http://localhost:3000 & echo Keep this window open! & echo. & cd /d \"%~dp0client\" && set BROWSER=none && npm start || (echo Error starting frontend! & pause)"
 
 REM Wait for servers to start, then open browser
 echo Waiting for servers to start...

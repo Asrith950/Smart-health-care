@@ -64,12 +64,18 @@ echo To stop everything: Close all terminal windows
 echo ==========================================
 echo.
 
-REM Start the website and wait a bit
-start "Website Server" cmd /k "echo Medical Records Website Server & echo ================================ & echo Frontend: http://localhost:3000 & echo Backend: http://localhost:5000 & echo. & echo Keep this window open! & echo To stop: Press Ctrl+C & echo. & npm run dev"
+REM Start backend server in its own window
+start "Backend Server (Port 5000)" cmd /k "echo Backend API Server & echo =================== & echo Running on: http://localhost:5000 & echo Keep this window open! & echo. & cd /d \"%~dp0server\" & npm run dev"
+
+REM Wait a moment for backend to initialize
+timeout /t 3 /nobreak >nul
+
+REM Start frontend in its own window (with BROWSER=none to prevent auto-open)
+start "Frontend React App (Port 3000)" cmd /k "echo Frontend React App & echo =================== & echo Running on: http://localhost:3000 & echo Keep this window open! & echo. & cd /d \"%~dp0client\" & set BROWSER=none && npm start"
 
 REM Wait for servers to start, then open browser
 echo Waiting for servers to start...
-timeout /t 15 /nobreak >nul
+timeout /t 20 /nobreak >nul
 
 echo Opening your website in the default browser...
 start http://localhost:3000

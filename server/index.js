@@ -106,12 +106,19 @@ app.listen(PORT, () => {
 
 // Try to connect to MongoDB (optional for demo)
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, {
+    ssl: true,
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+    serverSelectionTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+  })
   .then(() => {
     console.log('✅ Connected to MongoDB - Database features enabled');
   })
   .catch((err) => {
     console.log('⚠️  MongoDB connection failed - Website will run in demo mode');
+    console.log('   Error:', err.message);
     console.log('   Install MongoDB or use MongoDB Atlas for full database features');
     console.log('   The website frontend will work perfectly without database!');
   });
